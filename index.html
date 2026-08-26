@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MS Digital - O ecossistema que funde Engenharia de Software, Design Premium e Produção de Áudio.">
+    <title>MS Digital | O Ecossistema</title>
+    
+    <!-- Fontes Profissionais e Ícones -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* =========================================
+           VARIÁVEIS E RESET
+           ========================================= */
+        :root {
+            --bg-primary: #050505;
+            --bg-secondary: #0f0f11;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --accent-cyan: #00f3ff;
+            --accent-purple: #9d4edd;
+            --accent-gold: #fbbf24;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.2; }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+
+        /* =========================================
+           FUNDO DE PARTÍCULAS
+           ========================================= */
+        #particles-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;
+        }
+
+        /* =========================================
+           UTILITÁRIOS & IMAGENS
+           ========================================= */
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+        .section { padding: 100px 0; position: relative; border-bottom: 1px solid var(--border-color); }
+        
+        .section-title {
+            font-size: 2.5rem; margin-bottom: 16px; text-align: center;
+            background: linear-gradient(135deg, #fff 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+
+        .round-img {
+            width: 150px; height: 150px; border-radius: 50%; object-fit: cover;
+            margin: 0 auto 24px auto; display: block;
+            border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: var(--transition);
+        }
+        .round-img:hover { transform: scale(1.05); }
+        .img-cyan:hover { border-color: var(--accent-cyan); box-shadow: 0 0 20px rgba(0,243,255,0.3); }
+        .img-purple:hover { border-color: var(--accent-purple); box-shadow: 0 0 20px rgba(157,78,221,0.3); }
+        .img-gold:hover { border-color: var(--accent-gold); box-shadow: 0 0 20px rgba(251,191,36,0.3); }
+
+        /* Botões */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 14px 28px; border-radius: 8px; font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: var(--transition); border: none; gap: 8px;
+        }
+        .btn-primary { background: linear-gradient(135deg, var(--accent-cyan), #00a8ff); color: #000; box-shadow: 0 4px 20px rgba(0, 243, 255, 0.3); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0, 243, 255, 0.5); }
+        
+        .btn-secondary { background: transparent; border: 1px solid var(--border-color); color: var(--text-primary); }
+        .btn-secondary:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); background: rgba(0, 243, 255, 0.05); }
+
+        .btn-noct6 { background: linear-gradient(135deg, var(--accent-purple), #5a189a); color: #fff; box-shadow: 0 4px 20px rgba(157, 78, 221, 0.4); }
+        .btn-noct6:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(157, 78, 221, 0.6); }
+
+        .btn-insta { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: #fff; }
+        .btn-insta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(220, 39, 67, 0.4); }
+
+        /* =========================================
+           NAVBAR & MENU HAMBÚRGUER
+           ========================================= */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color); padding: 16px 0;
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
+        .nav-logo span { color: var(--accent-cyan); }
+        
+        .menu-btn {
+            display: none; background: none; border: none; color: var(--text-primary);
+            font-size: 1.5rem; cursor: pointer;
+        }
+
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); position: relative; }
+        .nav-links a:hover { color: var(--text-primary); }
+
+        /* =========================================
+           CONTEÚDO DAS SEÇÕES
+           ========================================= */
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding-top: 80px; border-bottom: none;}
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 24px; letter-spacing: -2px; }
+        .hero .gradient-text { background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 30px; line-height: 1.8; }
+
+        .content-block { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 40px; backdrop-filter: blur(10px); margin-bottom: 30px; }
+        .content-block h3 { margin: 25px 0 10px 0; font-size: 1.3rem; }
+        .content-block p { color: var(--text-secondary); margin-bottom: 15px; text-align: justify; }
+
+        .skills { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 24px; }
+        .skill-tag { background: rgba(0, 243, 255, 0.1); color: var(--accent-cyan); padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; border: 1px solid rgba(0, 243, 255, 0.2); }
+
+        .noct6-links { display: flex; justify-content: center; gap: 16px; margin-top: 32px; flex-wrap: wrap; }
+        .platform-link { padding: 10px 20px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem; color: var(--text-secondary); }
+        .platform-link:hover { border-color: var(--accent-purple); color: var(--accent-purple); background: rgba(157, 78, 221, 0.1); }
+
+        .form-input { width: 100%; padding: 14px; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-family: 'Inter', sans-serif; transition: var(--transition); }
+        .form-input:focus { outline: none; border-color: var(--accent-cyan); box-shadow: 0 0 0 3px rgba(0, 243, 255, 0.1); }
+
+        footer { background: #000; border-top: 1px solid var(--border-color); padding: 40px 0; text-align: center; color: var(--text-secondary); font-size: 0.9rem; }
+
+        /* =========================================
+           RESPONSIVIDADE
+           ========================================= */
+        @media (max-width: 768px) {
+            .menu-btn { display: block; }
+            .nav-links {
+                position: absolute; top: 100%; left: 0; width: 100%;
+                background: rgba(5, 5, 5, 0.95); flex-direction: column; text-align: center;
+                padding: 20px 0; display: none; border-bottom: 1px solid var(--border-color);
+            }
+            .nav-links.active { display: flex; }
+            .nav-links a { padding: 10px; font-size: 1.1rem; }
+            .hero-buttons { flex-direction: column; }
+            .arquiteto-grid { grid-template-columns: 1fr !important; text-align: center !important; }
+            .arquiteto-grid .skills { justify-content: center !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fundo de Partículas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Navegação com Menu Hambúrguer -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#msdigital" class="nav-logo">MS <span>DIGITAL</span></a>
+            <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#msdigital" onclick="toggleMenu()">Início</a></li>
+                <li><a href="#arquiteto" onclick="toggleMenu()">O Arquiteto</a></li>
+                <li><a href="#cromak" onclick="toggleMenu()">Cromak</a></li>
+                <li><a href="#noct6" onclick="toggleMenu()">NOCT6</a></li>
+                <li><a href="#frases365" onclick="toggleMenu()">365 Frases</a></li>
+                <li><a href="#contato" onclick="toggleMenu()">Contato</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero / MS Digital -->
+    <section id="msdigital" class="hero">
+        <div class="container">
+            <img src="ms_digital_logo.png" alt="MS Digital Logo" class="round-img img-cyan">
+            <h1>O Ecossistema <br><span class="gradient-text">MS Digital</span></h1>
+            <p>O ecossistema central que funde Engenharia de Software, Design Premium e Produção de Áudio em uma única visão integrada. Onde a criatividade humana encontra a precisão da máquina.</p>
+            
+            <div class="hero-buttons" style="display: flex; gap: 16px; justify-content: center; margin-top: 30px;">
+                <a href="#cromak" class="btn btn-primary">Explorar Projetos</a>
+                <a href="#contato" class="btn btn-secondary">Fale Conosco</a>
+            </div>
+
+            <div style="display: flex; gap: 16px; justify-content: center; margin-top: 30px;">
+                <a href="https://www.linkedin.com/in/mfs-marcos-souza" target="_blank" class="platform-link" style="border: none;"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="https://www.facebook.com/este.meucontato" target="_blank" class="platform-link" style="border: none;"><i class="fab fa-facebook"></i> Facebook</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- O Arquiteto -->
+    <section id="arquiteto" class="section">
+        <div class="container">
+            <img src="marcos_souza.png" alt="Marcos Souza" class="round-img img-cyan">
+            <h2 class="section-title">O Arquiteto</h2>
+            
+            <div class="arquiteto-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-top: 30px; text-align: left;">
+                <div>
+                    <p style="color: var(--text-secondary); margin-bottom: 15px;">Marcos Souza é o fundador, desenvolvedor e mente criativa por trás do ecossistema MS Digital.</p>
+                    <p style="color: var(--text-secondary); margin-bottom: 25px;">Unindo uma base técnica sólida na área de TI, programação e Gestão de Pessoas, ele opera na interseção exata entre tecnologia, comportamento humano e arte audiovisual. O foco é absoluto na experiência do usuário e na arquitetura de soluções que resolvem problemas reais.</p>
+                    
+                    <div class="skills" style="justify-content: flex-start; margin-top: 0;">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">PyQt6</span>
+                        <span class="skill-tag">Automação</span>
+                        <span class="skill-tag">UI/UX</span>
+                        <span class="skill-tag">Sound Design</span>
+                        <span class="skill-tag">Gestão</span>
+                    </div>
+                </div>
+                
+                <div class="arquiteto-card" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 40px; backdrop-filter: blur(10px);">
+                    <h3 style="color: var(--accent-cyan); margin-bottom: 15px; font-size: 1.3rem;">Filosofia de Trabalho</h3>
+                    <p style="color: var(--text-secondary); font-style: italic; font-size: 1.1rem; line-height: 1.8;">
+                        "Da lógica fria dos códigos em Python até os graves esmagadores do submundo musical, este é o laboratório onde a criatividade humana encontra a precisão da máquina."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cromak Technology -->
+    <section id="cromak" class="section">
+        <div class="container">
+            <img src="cromak_technology_logo.png" alt="Cromak Technology" class="round-img img-cyan">
+            <h2 class="section-title">Cromak Technology</h2>
+            
+            <div class="content-block">
+                <h3 style="color: var(--accent-cyan); text-align: center;">Engenharia Direta ao Ponto</h3>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto 15px auto;">A Cromak Technology nasceu para suprir a carência de softwares de alta performance focados na resolução de problemas, sem sobrecarga de recursos e sem telemetria invasiva.</p>
+
+                <!-- Estilos exclusivos para os Cards da Cromak -->
+                <style>
+                    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 40px 0 40px 0; }
+                    .feature-card { background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; text-align: left; transition: var(--transition); }
+                    .feature-card:hover { transform: translateY(-5px); border-color: var(--accent-cyan); box-shadow: 0 10px 30px rgba(0, 243, 255, 0.1); }
+                </style>
+
+                <!-- Grid de Cards copiados do design do Qwen -->
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h4 style="color: var(--accent-cyan); margin-bottom: 12px; font-size: 1.1rem;">⚡ Alta Performance</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 0; text-align: left;">Código 100% Nativo. Ferramentas prontas para o trabalho pesado, sem travar o seu computador.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4 style="color: var(--accent-cyan); margin-bottom: 12px; font-size: 1.1rem;">🛡️ Zero Telemetria</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 0; text-align: left;">Operação 100% offline (Zero-Cloud) para garantir sua privacidade e segurança absoluta.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4 style="color: var(--accent-cyan); margin-bottom: 12px; font-size: 1.1rem;">🎨 Design Premium</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 0; text-align: left;">Interface limpa e intuitiva. Unimos engenharia avançada a uma experiência de usuário impecável.</p>
+                    </div>
+                </div>
+
+                <!-- Rodapé da Seção com Botão -->
+                <div style="text-align: center; border-top: 1px solid var(--border-color); padding-top: 25px;">
+                    <p style="text-align: center; margin-bottom: 20px;"><strong style="color: var(--text-primary);">✓ Código 100% Nativo | ✓ Zero Telemetria | ✓ Suporte Internacional (11 Idiomas)</strong></p>
+                    <a href="https://cromaktechnology.github.io" target="_blank" class="btn btn-primary"><i class="fab fa-github"></i> Acessar Portal Cromak</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOCT6 -->
+    <section id="noct6" class="section" style="background: radial-gradient(circle at center, rgba(157, 78, 221, 0.05) 0%, transparent 70%);">
+        <div class="container">
+            <img src="noct6.png" alt="NOCT6" class="round-img img-purple">
+            <h2 class="section-title" style="background: linear-gradient(135deg, #fff, var(--accent-purple)); -webkit-background-clip: text; background-clip: text;">NOCT6</h2>
+            
+            <div class="content-block">
+                <p>Dualidade sônica em sua forma mais absoluta. NOCT6 é o arquiteto de frequências projetado para ser a trilha sonora definitiva dos seus 365 dias.</p>
+                <p>A visão é o domínio completo sobre ambos os lados da experiência humana e digital. Durante o dia, a entrega é focada em emoção e motivação: harmonias inspiradoras, melodias orgânicas e a energia vital necessária para impulsionar a sua rotina e elevar a sua mente.</p>
+                <p>Mas quando a noite cai, o sistema reinicia. O lado humano cessa e a máquina desperta. NOCT6 assume o controle com uma engenharia de som agressiva e implacável, dominando o submundo do Midtempo Bass, Brazilian Bass e Cinematic Cyberpunk.</p>
+                <p>Criador de narrativas imersivas e do universo "Machine Dawn", suas produções noturnas são definidas por Sub-Graves pesados e esmagadores, texturas industriais, sintetizadores sombrios e uma atmosfera de alta voltagem construída para destruir a pista de dança. É a fusão perfeita entre o sentimento orgânico e a precisão fria de um sistema hackeando a rede.</p>
+                <p style="text-align: center; margin-top: 20px; font-weight: 600; color: var(--text-primary);">Escolha o seu momento. Deixe a inspiração guiar o seu dia e deixe o grave tomar o controle da sua noite. Sistema online...</p>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="https://djnoct6.github.io" target="_blank" class="btn btn-noct6"><i class="fas fa-compact-disc"></i> Visitar Site Oficial NOCT6</a>
+                </div>
+
+                <div class="noct6-links">
+                    <a href="#" class="platform-link"><i class="fab fa-spotify"></i> Spotify</a>
+                    <a href="#" class="platform-link"><i class="fas fa-play-circle"></i> YT Music</a>
+                    <a href="#" class="platform-link"><i class="fab fa-youtube"></i> YouTube</a>
+                    <a href="#" class="platform-link"><i class="fab fa-apple"></i> Apple Music</a>
+                    <a href="#" class="platform-link"><i class="fab fa-deezer"></i> Deezer</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 365 Frases -->
+    <section id="frases365" class="section">
+        <div class="container">
+            <img src="365_frases_diarias.png" alt="365 Frases Diárias" class="round-img img-gold">
+            <h2 class="section-title" style="background: linear-gradient(135deg, #fff, var(--accent-gold)); -webkit-background-clip: text; background-clip: text;">@365_frases_diarias</h2>
+            
+            <div class="content-block" style="text-align: center; background: linear-gradient(135deg, rgba(251, 191, 36, 0.05), transparent); border-color: rgba(251, 191, 36, 0.2);">
+                <p style="text-align: center; max-width: 700px; margin: 0 auto 30px auto; font-size: 1.1rem;">Uma dose diária de reflexão, motivação e estética visual de qualidade. Criado para inspirar e transformar perspectivas através de palavras selecionadas, unindo design leve a mensagens de impacto para o seu dia a dia.</p>
+                <a href="https://www.instagram.com/365_frases_diarias" target="_blank" class="btn btn-insta"><i class="fab fa-instagram"></i> Acessar Instagram</a>
+            </div>
+        </div>
+    </section>
+
+<!-- Contato -->
+    <section id="contato" class="section">
+        <div class="container">
+            <div style="text-align: center;">
+                <h2 class="section-title">Entre em Contato</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 40px;">Tem um projeto em mente ou quer saber mais sobre o ecossistema? Envie uma mensagem.</p>
+            </div>
+            
+            <!-- Estilos exclusivos para o formulário escuro -->
+            <style>
+                .form-card { max-width: 600px; margin: 0 auto; background: #0a0a0a; border: 1px solid #222; border-radius: 16px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+                .form-label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; color: #a1a1aa; text-align: left; }
+                .form-input-dark { width: 100%; padding: 14px; background: #050505; border: 1px solid #222; border-radius: 8px; color: #fff; font-family: 'Inter', sans-serif; transition: var(--transition); margin-bottom: 20px; }
+                .form-input-dark:focus { outline: none; border-color: var(--accent-cyan); box-shadow: 0 0 0 1px var(--accent-cyan); }
+                .btn-cyan-glow { width: 100%; background: linear-gradient(90deg, #41d1ff, #29b6f6); color: #000; font-weight: 700; padding: 16px; border-radius: 8px; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(65, 209, 255, 0.4); margin-top: 10px; font-size: 1rem; }
+                .btn-cyan-glow:hover { box-shadow: 0 6px 25px rgba(65, 209, 255, 0.6); transform: translateY(-2px); }
+            </style>
+
+            <form class="form-card" onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso! (Simulação)');">
+                <div>
+                    <label class="form-label">Nome Completo</label>
+                    <input type="text" required placeholder="Seu nome" class="form-input-dark">
+                </div>
+                <div>
+                    <label class="form-label">E-mail</label>
+                    <input type="email" required placeholder="seu@email.com" class="form-input-dark">
+                </div>
+                <div>
+                    <label class="form-label">Assunto</label>
+                    <input type="text" required placeholder="Sobre o que deseja falar?" class="form-input-dark">
+                </div>
+                <div>
+                    <label class="form-label">Mensagem</label>
+                    <textarea required placeholder="Descreva seu projeto ou dúvida..." class="form-input-dark" style="min-height: 120px; resize: vertical; margin-bottom: 10px;"></textarea>
+                </div>
+                <button type="submit" class="btn-cyan-glow">Enviar Mensagem</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 MS Digital | Marcos Souza. Todos os direitos reservados.</p>
+            <p style="margin-top: 8px; font-size: 0.8rem; opacity: 0.6;">Engenharia de Software • Design Premium • Produção de Áudio</p>
+        </div>
+    </footer>
+
+    <!-- Scripts: Menu Hambúrguer e Partículas -->
+    <script>
+        // Menu Hambúrguer
+        function toggleMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.toggle('active');
+        }
+
+        // Fechar menu ao clicar num link no mobile
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                const nav = document.getElementById('navLinks');
+                if(nav.classList.contains('active')) {
+                    nav.classList.remove('active');
+                }
+            });
+        });
+
+        // Fundo Animado de Partículas
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray = [];
+        const numberOfParticles = 80;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() * 1) - 0.5;
+                this.speedY = (Math.random() * 1) - 0.5;
+                this.color = 'rgba(255, 255, 255, 0.2)';
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.size > 0.2) this.size -= 0.01;
+                if (this.size <= 0.2) this.size = Math.random() * 2 + 0.5;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        });
+
+        init();
+        animate();
+    </script>
+</body>
+</html>
