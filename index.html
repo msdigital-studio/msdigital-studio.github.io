@@ -172,6 +172,44 @@
             .arquiteto-grid { grid-template-columns: 1fr !important; text-align: center !important; }
             .arquiteto-grid .skills { justify-content: center !important; }
         }
+		/* =========================================
+           BOTÃO BACK TO TOP
+           ========================================= */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: rgba(0, 243, 255, 0.05);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 243, 255, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -385,7 +423,12 @@
         </div>
     </footer>
 
-    <!-- Scripts: Menu Hambúrguer e Partículas -->
+	<!-- Botão Back to Top -->
+    <button id="backToTop" class="back-to-top" aria-label="Voltar ao topo">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Scripts: Menu Hambúrguer, Back to Top e Partículas -->
     <script>
         // Menu Hambúrguer
         function toggleMenu() {
@@ -400,6 +443,24 @@
                 if(nav.classList.contains('active')) {
                     nav.classList.remove('active');
                 }
+            });
+        });
+
+        // Botão Back to Top
+        const backToTopBtn = document.getElementById("backToTop");
+        
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.add("show");
+            } else {
+                backToTopBtn.classList.remove("show");
+            }
+        });
+
+        backToTopBtn.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
             });
         });
 
