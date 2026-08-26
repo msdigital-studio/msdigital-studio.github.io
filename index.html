@@ -307,11 +307,11 @@
                 </div>
 
                 <div class="noct6-links">
-                    <a href="#" class="platform-link"><i class="fab fa-spotify"></i> Spotify</a>
-                    <a href="#" class="platform-link"><i class="fas fa-play-circle"></i> YT Music</a>
-                    <a href="#" class="platform-link"><i class="fab fa-youtube"></i> YouTube</a>
-                    <a href="#" class="platform-link"><i class="fab fa-apple"></i> Apple Music</a>
-                    <a href="#" class="platform-link"><i class="fab fa-deezer"></i> Deezer</a>
+                    <a href="https://open.spotify.com/intl-pt/artist/5Bw51rdRdT0kdIx4iwkwm1" class="platform-link"><i class="fab fa-spotify"></i> Spotify</a>
+                    <a href="https://music.youtube.com/channel/UC-WBjX0CbBhPfLAHL5CMiuA" class="platform-link"><i class="fas fa-play-circle"></i> YT Music</a>
+                    <a href="https://www.youtube.com/@dj_noct6" class="platform-link"><i class="fab fa-youtube"></i> YouTube</a>
+                    <a href="https://music.apple.com/br/artist/noct6/6798927577" class="platform-link"><i class="fab fa-apple"></i> Apple Music</a>
+                    <a href="https://www.deezer.com/br/artist/408913312" class="platform-link"><i class="fab fa-deezer"></i> Deezer</a>
                 </div>
             </div>
         </div>
@@ -321,7 +321,7 @@
     <section id="frases365" class="section">
         <div class="container">
             <img src="images\365_frases_diarias.png" alt="365 Frases Diárias" class="round-img img-gold">
-            <h2 class="section-title" style="background: linear-gradient(135deg, #fff, var(--accent-gold)); -webkit-background-clip: text; background-clip: text;">@365_frases_diarias</h2>
+            <h2 class="section-title" style="background: linear-gradient(135deg, #fff, var(--accent-gold)); -webkit-background-clip: text; background-clip: text;">365 Frases Diárias</h2>
             
             <div class="content-block" style="text-align: center; background: linear-gradient(135deg, rgba(251, 191, 36, 0.05), transparent); border-color: rgba(251, 191, 36, 0.2);">
                 <p style="text-align: center; max-width: 700px; margin: 0 auto 30px auto; font-size: 1.1rem;">Uma dose diária de reflexão, motivação e estética visual de qualidade. Criado para inspirar e transformar perspectivas através de palavras selecionadas, unindo design leve a mensagens de impacto para o seu dia a dia.</p>
@@ -348,22 +348,23 @@
                 .btn-cyan-glow:hover { box-shadow: 0 6px 25px rgba(65, 209, 255, 0.6); transform: translateY(-2px); }
             </style>
 
-            <form class="form-card" onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso! (Simulação)');">
+            <!-- Formulário Integrado com Formspree -->
+            <form class="form-card" action="https://formspree.io/f/mdeonndz" method="POST">
                 <div>
                     <label class="form-label">Nome Completo</label>
-                    <input type="text" required placeholder="Seu nome" class="form-input-dark">
+                    <input type="text" name="nome" required placeholder="Seu nome" class="form-input-dark">
                 </div>
                 <div>
                     <label class="form-label">E-mail</label>
-                    <input type="email" required placeholder="seu@email.com" class="form-input-dark">
+                    <input type="email" name="email" required placeholder="seu@email.com" class="form-input-dark">
                 </div>
                 <div>
                     <label class="form-label">Assunto</label>
-                    <input type="text" required placeholder="Sobre o que deseja falar?" class="form-input-dark">
+                    <input type="text" name="assunto" required placeholder="Sobre o que deseja falar?" class="form-input-dark">
                 </div>
                 <div>
                     <label class="form-label">Mensagem</label>
-                    <textarea required placeholder="Descreva seu projeto ou dúvida..." class="form-input-dark" style="min-height: 120px; resize: vertical; margin-bottom: 10px;"></textarea>
+                    <textarea name="mensagem" required placeholder="Descreva seu projeto ou dúvida..." class="form-input-dark" style="min-height: 120px; resize: vertical; margin-bottom: 10px;"></textarea>
                 </div>
                 <button type="submit" class="btn-cyan-glow">Enviar Mensagem</button>
             </form>
