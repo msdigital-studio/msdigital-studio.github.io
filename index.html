@@ -33,7 +33,7 @@
     <!-- Fontes Profissionais e Ícones -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -46,7 +46,9 @@
             --bg-card: rgba(255, 255, 255, 0.03);
             --text-primary: #ffffff;
             --text-secondary: #a1a1aa;
+            --accent-blue: #0052ff;
             --accent-cyan: #00f3ff;
+            --accent-red: #ff0000;
             --accent-purple: #9d4edd;
             --accent-gold: #fbbf24;
             --border-color: rgba(255, 255, 255, 0.1);
@@ -63,7 +65,14 @@
             overflow-x: hidden;
         }
 
-        h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.2; }
+        /* Títulos Orbitron em Caixa Alta */
+        h1, h2, h3, h4 { 
+            font-family: 'Orbitron', sans-serif; 
+            font-weight: 700; 
+            line-height: 1.2; 
+            text-transform: uppercase;
+        }
+
         a { text-decoration: none; color: inherit; transition: var(--transition); }
 
         /* =========================================
@@ -76,13 +85,22 @@
         /* =========================================
            UTILITÁRIOS & IMAGENS
            ========================================= */
-        .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
-        .section { padding: 100px 0; position: relative; border-bottom: 1px solid var(--border-color); }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
         
+        /* ILUMINAÇÃO DE FUNDO (BACKGROUND GLOW) */
+        .section { padding: 100px 0; position: relative; border-bottom: 1px solid var(--border-color); overflow: hidden; }
+        
+        .section-glow-blue { background: radial-gradient(circle at center 20%, rgba(0, 82, 255, 0.08) 0%, transparent 60%); }
+        .section-glow-red { background: radial-gradient(circle at center 20%, rgba(255, 0, 0, 0.05) 0%, transparent 60%); }
+        .section-glow-cyan { background: radial-gradient(circle at center 20%, rgba(0, 243, 255, 0.05) 0%, transparent 60%); }
+        .section-glow-purple { background: radial-gradient(circle at center 20%, rgba(157, 78, 221, 0.08) 0%, transparent 60%); }
+        .section-glow-yellow { background: radial-gradient(circle at center 20%, rgba(251, 191, 36, 0.05) 0%, transparent 60%); }
+
         .section-title {
             font-size: 2.5rem; margin-bottom: 16px; text-align: center;
             background: linear-gradient(135deg, #fff 0%, var(--text-secondary) 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            letter-spacing: 2px;
         }
 
         .round-img {
@@ -146,21 +164,12 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Classes de Cores */
-		/* MS DIGITAL */
+        /* Classes de Cores para Anéis */
         .avatar-blue::before, .avatar-blue::after { background: linear-gradient(135deg, #0052ff, #00d4ff); }
-		
-		/* Arquiteto */
         .avatar-red::before, .avatar-red::after { background: linear-gradient(135deg, #ff0000, #ff5555); }
-		
-		/* Cromak */
-        .avatar-cyan::before, .avatar-cyan::after { background: linear-gradient(135deg, var(--accent-cyan), #39ff14, #0052ff);); }
-		
-		/* NOCT6 */
+        .avatar-cyan::before, .avatar-cyan::after { background: linear-gradient(135deg, var(--accent-cyan), #39ff14, #0052ff); }
         .avatar-purple::before, .avatar-purple::after { background: linear-gradient(135deg, var(--accent-purple), #e91e8c); }
-		
-		/* 365 Frases diária */
-        .avatar-yellow::before, .avatar-yellow::after { background: linear-gradient(135deg, var(--accent-gold), #ff8800, #ff9c00);); }
+        .avatar-yellow::before, .avatar-yellow::after { background: linear-gradient(135deg, var(--accent-gold), #ff8800, #ff9c00); }
 
 
         /* Botões */
@@ -168,6 +177,7 @@
             display: inline-flex; align-items: center; justify-content: center;
             padding: 14px 28px; border-radius: 8px; font-weight: 600; font-size: 0.95rem;
             cursor: pointer; transition: var(--transition); border: none; gap: 8px;
+            font-family: 'Inter', sans-serif; /* Mantém botões legíveis */
         }
         .btn-primary { background: linear-gradient(135deg, var(--accent-cyan), #00a8ff); color: #000; box-shadow: 0 4px 20px rgba(0, 243, 255, 0.3); }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0, 243, 255, 0.5); }
@@ -189,8 +199,14 @@
             background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color); padding: 16px 0;
         }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; }
-        .nav-logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
+        
+        .nav-container { 
+            display: flex; justify-content: space-between; align-items: center; 
+            max-width: 1600px; /* Alargamento para espaçar logo e menu */
+            width: 100%;
+        }
+        
+        .nav-logo { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; text-transform: uppercase;}
         .nav-logo span { color: var(--accent-cyan); }
         
         .menu-btn {
@@ -199,20 +215,28 @@
         }
 
         .nav-links { display: flex; gap: 32px; list-style: none; }
-        .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); position: relative; }
+        .nav-links a { 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: 0.8rem; 
+            font-weight: 500; 
+            color: var(--text-secondary); 
+            position: relative; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
         .nav-links a:hover { color: var(--text-primary); }
 
         /* =========================================
            CONTEÚDO DAS SEÇÕES
            ========================================= */
-        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding-top: 80px; border-bottom: none;}
-        .hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 24px; letter-spacing: -2px; }
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding-top: 80px; border-bottom: 1px solid var(--border-color);}
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 24px; letter-spacing: 2px; }
         .hero .gradient-text { background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero p { font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 30px; line-height: 1.8; }
 
         .content-block { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 40px; backdrop-filter: blur(10px); margin-bottom: 30px; }
-        .content-block h3 { margin: 25px 0 10px 0; font-size: 1.3rem; }
-        .content-block p { color: var(--text-secondary); margin-bottom: 15px; text-align: justify; }
+        .content-block h3 { margin: 25px 0 10px 0; font-size: 1.3rem; font-family: 'Orbitron', sans-serif;}
+        .content-block p { color: var(--text-secondary); margin-bottom: 15px; text-align: justify; font-family: 'Inter', sans-serif;}
 
         .skills { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 24px; }
         .skill-tag { background: rgba(0, 243, 255, 0.1); color: var(--accent-cyan); padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; border: 1px solid rgba(0, 243, 255, 0.2); }
@@ -297,21 +321,21 @@
                 <li><a href="#arquiteto" onclick="toggleMenu()">O Arquiteto</a></li>
                 <li><a href="#cromak" onclick="toggleMenu()">Cromak Technology</a></li>
                 <li><a href="#noct6" onclick="toggleMenu()">NOCT6</a></li>
-                <li><a href="#frases365" onclick="toggleMenu()">365 Frases Diárias</a></li>
+                <li><a href="#frases365" onclick="toggleMenu()">365 Frases</a></li>
                 <li><a href="#contato" onclick="toggleMenu()">Contato</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- Hero / MS Digital -->
-    <section id="msdigital" class="hero">
+    <section id="msdigital" class="hero section-glow-blue">
         <div class="container">
             
             <div class="avatar-wrapper avatar-blue">
                 <img src="images\ms_digital_logo.png" alt="MS Digital Logo" class="round-img">
             </div>
 
-            <h1>O Ecossistema <br><span class="gradient-text">MS Digital</span></h1>
+            <h1>O ECOSSISTEMA <br><span class="gradient-text">MS DIGITAL</span></h1>
             <p>O ecossistema central que funde Engenharia de Software, Design Premium e Produção de Áudio em uma única visão integrada. Onde a criatividade humana encontra a precisão da máquina.</p>
             
             <div class="hero-buttons" style="display: flex; gap: 16px; justify-content: center; margin-top: 30px;">
@@ -327,14 +351,14 @@
     </section>
 
     <!-- O Arquiteto -->
-    <section id="arquiteto" class="section">
+    <section id="arquiteto" class="section section-glow-red">
         <div class="container">
             
             <div class="avatar-wrapper avatar-red">
                 <img src="images\marcos_souza.png" alt="Marcos Souza" class="round-img">
             </div>
 
-            <h2 class="section-title">O Arquiteto</h2>
+            <h2 class="section-title">O ARQUITETO</h2>
             
             <div class="arquiteto-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-top: 30px; text-align: left;">
                 <div>
@@ -362,14 +386,14 @@
     </section>
 
     <!-- Cromak Technology -->
-    <section id="cromak" class="section">
+    <section id="cromak" class="section section-glow-cyan">
         <div class="container">
             
             <div class="avatar-wrapper avatar-cyan">
                 <img src="images\cromak_technology_logo.png" alt="Cromak Technology" class="round-img">
             </div>
 
-            <h2 class="section-title">Cromak Technology</h2>
+            <h2 class="section-title">CROMAK TECHNOLOGY</h2>
             
             <div class="content-block">
                 <h3 style="color: var(--accent-cyan); text-align: center;">Engenharia Direta ao Ponto</h3>
@@ -385,17 +409,17 @@
                 <!-- Grid de Cards copiados do design do Qwen -->
                 <div class="features-grid">
                     <div class="feature-card">
-                        <h4 style="color: var(--accent-cyan); margin-bottom: 12px; font-size: 1.1rem;">⚡ Alta Performance</h4>
+                        <h4 style="color: var(--accent-cyan); margin-bottom: 12px; font-size: 1.1rem; font-family: 'Orbitron', sans-serif;">⚡ Alta Performance</h4>
                         <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 0; text-align: left;">Código 100% Nativo. Ferramentas prontas para o trabalho pesado, sem travar o seu computador.</p>
                     </div>
                     
                     <div class="feature-card">
-                        <h4 style="color: var(--accent-cyan); margin-bottom: 12px; font-size: 1.1rem;">🛡️ Zero Telemetria</h4>
+                        <h4 style="color: var(--accent-cyan); margin-bottom: 12px; font-size: 1.1rem; font-family: 'Orbitron', sans-serif;">🛡️ Zero Telemetria</h4>
                         <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 0; text-align: left;">Operação 100% offline (Zero-Cloud) para garantir sua privacidade e segurança absoluta.</p>
                     </div>
                     
                     <div class="feature-card">
-                        <h4 style="color: var(--accent-cyan); margin-bottom: 12px; font-size: 1.1rem;">🎨 Design Premium</h4>
+                        <h4 style="color: var(--accent-cyan); margin-bottom: 12px; font-size: 1.1rem; font-family: 'Orbitron', sans-serif;">🎨 Design Premium</h4>
                         <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 0; text-align: left;">Interface limpa e intuitiva. Unimos engenharia avançada a uma experiência de usuário impecável.</p>
                     </div>
                 </div>
@@ -410,7 +434,7 @@
     </section>
 
     <!-- NOCT6 -->
-    <section id="noct6" class="section" style="background: radial-gradient(circle at center, rgba(157, 78, 221, 0.05) 0%, transparent 70%);">
+    <section id="noct6" class="section section-glow-purple">
         <div class="container">
             
             <div class="avatar-wrapper avatar-purple">
@@ -442,14 +466,14 @@
     </section>
 
     <!-- 365 Frases -->
-    <section id="frases365" class="section">
+    <section id="frases365" class="section section-glow-yellow">
         <div class="container">
 
             <div class="avatar-wrapper avatar-yellow">
                 <img src="images\365_frases_diarias.png" alt="365 Frases Diárias" class="round-img">
             </div>
 
-            <h2 class="section-title" style="background: linear-gradient(135deg, #fff, var(--accent-gold)); -webkit-background-clip: text; background-clip: text;">365 Frases Diárias</h2>
+            <h2 class="section-title" style="background: linear-gradient(135deg, #fff, var(--accent-gold)); -webkit-background-clip: text; background-clip: text;">365 FRASES DIÁRIAS</h2>
             
             <div class="content-block" style="text-align: center; background: linear-gradient(135deg, rgba(251, 191, 36, 0.05), transparent); border-color: rgba(251, 191, 36, 0.2);">
                 <p style="text-align: center; max-width: 800px; margin: 0 auto 30px auto; font-size: 1.1rem; line-height: 1.8;">
@@ -489,7 +513,7 @@
     <section id="contato" class="section">
         <div class="container">
             <div style="text-align: center;">
-                <h2 class="section-title">Entre em Contato</h2>
+                <h2 class="section-title">ENTRE EM CONTATO</h2>
                 <p style="color: var(--text-secondary); margin-bottom: 40px;">Tem um projeto em mente ou quer saber mais sobre o ecossistema? Envie uma mensagem.</p>
             </div>
             
@@ -499,7 +523,7 @@
                 .form-label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; color: #a1a1aa; text-align: left; }
                 .form-input-dark { width: 100%; padding: 14px; background: #050505; border: 1px solid #222; border-radius: 8px; color: #fff; font-family: 'Inter', sans-serif; transition: var(--transition); margin-bottom: 20px; }
                 .form-input-dark:focus { outline: none; border-color: var(--accent-cyan); box-shadow: 0 0 0 1px var(--accent-cyan); }
-                .btn-cyan-glow { width: 100%; background: linear-gradient(90deg, #41d1ff, #29b6f6); color: #000; font-weight: 700; padding: 16px; border-radius: 8px; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(65, 209, 255, 0.4); margin-top: 10px; font-size: 1rem; }
+                .btn-cyan-glow { width: 100%; background: linear-gradient(90deg, #41d1ff, #29b6f6); color: #000; font-weight: 700; padding: 16px; border-radius: 8px; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(65, 209, 255, 0.4); margin-top: 10px; font-size: 1rem; font-family: 'Orbitron', sans-serif; text-transform: uppercase;}
                 .btn-cyan-glow:hover { box-shadow: 0 6px 25px rgba(65, 209, 255, 0.6); transform: translateY(-2px); }
             </style>
 
