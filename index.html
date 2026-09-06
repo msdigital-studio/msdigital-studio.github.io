@@ -83,15 +83,72 @@
 
         .round-img {
             width: 150px; height: 150px; border-radius: 50%; object-fit: cover;
-            margin: 0 auto 24px auto; display: block;
+            display: block;
             border: 2px solid rgba(255,255,255,0.1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* =========================================
+           EFEITO DE ROTAÇÃO NAS IMAGENS
+           ========================================= */
+        .avatar-wrapper {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 24px auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
             transition: var(--transition);
         }
-        .round-img:hover { transform: scale(1.05); }
-        .img-cyan:hover { border-color: var(--accent-cyan); box-shadow: 0 0 20px rgba(0,243,255,0.3); }
-        .img-purple:hover { border-color: var(--accent-purple); box-shadow: 0 0 20px rgba(157,78,221,0.3); }
-        .img-gold:hover { border-color: var(--accent-gold); box-shadow: 0 0 20px rgba(251,191,36,0.3); }
+
+        .avatar-wrapper:hover {
+            transform: scale(1.05);
+        }
+
+        .avatar-wrapper img.round-img {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            border: 3px solid var(--bg-primary);
+            box-shadow: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Camadas do anel giratório */
+        .avatar-wrapper::before,
+        .avatar-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            animation: rotateBorder 4s linear infinite;
+        }
+
+        .avatar-wrapper::before {
+            z-index: -1;
+        }
+
+        .avatar-wrapper::after {
+            filter: blur(15px);
+            opacity: 0.6;
+            z-index: -2;
+        }
+
+        @keyframes rotateBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Classes de Cores */
+        .avatar-blue::before, .avatar-blue::after { background: linear-gradient(135deg, #0052ff, #00d4ff); }
+        .avatar-red::before, .avatar-red::after { background: linear-gradient(135deg, #ff0000, #ff5555); }
+        .avatar-cyan::before, .avatar-cyan::after { background: linear-gradient(135deg, var(--accent-cyan), #00a8ff); }
+        .avatar-purple::before, .avatar-purple::after { background: linear-gradient(135deg, var(--accent-purple), #e91e8c); }
+        .avatar-yellow::before, .avatar-yellow::after { background: linear-gradient(135deg, var(--accent-gold), #ffea00); }
+
 
         /* Botões */
         .btn {
@@ -236,7 +293,11 @@
     <!-- Hero / MS Digital -->
     <section id="msdigital" class="hero">
         <div class="container">
-            <img src="images\ms_digital_logo.png" alt="MS Digital Logo" class="round-img img-cyan">
+            
+            <div class="avatar-wrapper avatar-blue">
+                <img src="images\ms_digital_logo.png" alt="MS Digital Logo" class="round-img">
+            </div>
+
             <h1>O Ecossistema <br><span class="gradient-text">MS Digital</span></h1>
             <p>O ecossistema central que funde Engenharia de Software, Design Premium e Produção de Áudio em uma única visão integrada. Onde a criatividade humana encontra a precisão da máquina.</p>
             
@@ -255,7 +316,11 @@
     <!-- O Arquiteto -->
     <section id="arquiteto" class="section">
         <div class="container">
-            <img src="images\marcos_souza.png" alt="Marcos Souza" class="round-img img-cyan">
+            
+            <div class="avatar-wrapper avatar-red">
+                <img src="images\marcos_souza.png" alt="Marcos Souza" class="round-img">
+            </div>
+
             <h2 class="section-title">O Arquiteto</h2>
             
             <div class="arquiteto-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-top: 30px; text-align: left;">
@@ -286,7 +351,11 @@
     <!-- Cromak Technology -->
     <section id="cromak" class="section">
         <div class="container">
-            <img src="images\cromak_technology_logo.png" alt="Cromak Technology" class="round-img img-cyan">
+            
+            <div class="avatar-wrapper avatar-cyan">
+                <img src="images\cromak_technology_logo.png" alt="Cromak Technology" class="round-img">
+            </div>
+
             <h2 class="section-title">Cromak Technology</h2>
             
             <div class="content-block">
@@ -330,7 +399,11 @@
     <!-- NOCT6 -->
     <section id="noct6" class="section" style="background: radial-gradient(circle at center, rgba(157, 78, 221, 0.05) 0%, transparent 70%);">
         <div class="container">
-            <img src="images\noct6_logo.png" alt="NOCT6" class="round-img img-purple">
+            
+            <div class="avatar-wrapper avatar-purple">
+                <img src="images\noct6_logo.png" alt="NOCT6" class="round-img">
+            </div>
+
             <h2 class="section-title" style="background: linear-gradient(135deg, #fff, var(--accent-purple)); -webkit-background-clip: text; background-clip: text;">NOCT6</h2>
             
             <div class="content-block">
@@ -358,12 +431,43 @@
     <!-- 365 Frases -->
     <section id="frases365" class="section">
         <div class="container">
-            <img src="images\365_frases_diarias.png" alt="365 Frases Diárias" class="round-img img-gold">
+
+            <div class="avatar-wrapper avatar-yellow">
+                <img src="images\365_frases_diarias.png" alt="365 Frases Diárias" class="round-img">
+            </div>
+
             <h2 class="section-title" style="background: linear-gradient(135deg, #fff, var(--accent-gold)); -webkit-background-clip: text; background-clip: text;">365 Frases Diárias</h2>
             
             <div class="content-block" style="text-align: center; background: linear-gradient(135deg, rgba(251, 191, 36, 0.05), transparent); border-color: rgba(251, 191, 36, 0.2);">
-                <p style="text-align: center; max-width: 700px; margin: 0 auto 30px auto; font-size: 1.1rem;">Uma dose diária de reflexão, motivação e estética visual de qualidade. Criado para inspirar e transformar perspectivas através de palavras selecionadas, unindo design leve a mensagens de impacto para o seu dia a dia.</p>
-                <a href="https://www.instagram.com/365_frases_diarias" target="_blank" class="btn btn-insta"><i class="fab fa-instagram"></i> Acessar Instagram</a>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto 30px auto; font-size: 1.1rem; line-height: 1.8;">
+                    Uma comunidade massiva unida por uma estética intimista e nostálgica. Através de bilhetes curtos escritos à mão e fotografados contra cenários rurais e cotidianos, o projeto entrega uma dose diária de reflexão, fé e romance, quebrando o padrão frio das redes sociais e gerando uma conexão orgânica autêntica.
+                </p>
+
+                <!-- Grid de Prova Social / Estatísticas -->
+                <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 35px; flex-wrap: wrap;">
+                    <div style="background: rgba(0,0,0,0.4); padding: 15px 25px; border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.2); min-width: 140px;">
+                        <h4 style="color: var(--accent-gold); font-size: 1.5rem; margin-bottom: 5px;">600k+</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; text-transform: uppercase; letter-spacing: 1px;">Seguidores</p>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.4); padding: 15px 25px; border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.2); min-width: 140px;">
+                        <h4 style="color: var(--accent-gold); font-size: 1.5rem; margin-bottom: 5px;">500M+</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; text-transform: uppercase; letter-spacing: 1px;">Total Views</p>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.4); padding: 15px 25px; border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.2); min-width: 140px;">
+                        <h4 style="color: var(--accent-gold); font-size: 1.5rem; margin-bottom: 5px;">1.3k+</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; text-transform: uppercase; letter-spacing: 1px;">Publicações</p>
+                    </div>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <a href="https://www.instagram.com/365_frases_diarias" target="_blank" class="btn btn-insta">
+                        <i class="fab fa-instagram"></i> Acessar Instagram
+                    </a>
+                    <a href="https://beacons.ai/365_frases_diarias" target="_blank" class="btn" style="background: rgba(255,255,255,0.05); color: var(--text-primary); border: 1px solid var(--accent-gold);">
+                        <i class="fas fa-shopping-bag" style="color: var(--accent-gold);"></i> Nossa Loja
+                    </a>
+                </div>
             </div>
         </div>
     </section>
